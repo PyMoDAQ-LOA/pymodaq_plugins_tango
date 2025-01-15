@@ -4,7 +4,7 @@ pymodaq_plugins_template
 .. the following must be adapted to your developed package, links to pypi, github  description...
 
 .. image:: https://img.shields.io/pypi/v/pymodaq_plugins_template.svg
-   :target: https://pypi.org/project/pymodaq_plugins_template/
+   :target: https://pypi.org/project/pymodaq_plugins_tango/
    :alt: Latest Version
 
 .. image:: https://readthedocs.org/projects/pymodaq/badge/?version=latest
@@ -27,17 +27,6 @@ Authors
 
 * Aline Vernier  (aline.vernier@polytechnique.edu)
 
-.. if needed use this field
-
-    Contributors
-    ============
-
-    * None
-
-.. if needed use this field
-
-  Depending on the plugin type, delete/complete the fields below
-
 
 Instruments
 ===========
@@ -47,40 +36,37 @@ Below is the list of instruments included in this plugin
 Actuators
 +++++++++
 
-* **yyy**: control of yyy actuators
-* **xxx**: control of xxx actuators
+* None so far
 
 Viewer0D
 ++++++++
 
-* **yyy**: control of yyy 0D detector
-* **xxx**: control of xxx 0D detector
+* None so far
 
 Viewer1D
 ++++++++
 
-* **yyy**: control of yyy 1D detector
-* **xxx**: control of xxx 1D detector
+* Spectrometer viewer
+* Generic tango viewer, not implemented
 
 
 Viewer2D
 ++++++++
 
-* **yyy**: control of yyy 2D detector
-* **xxx**: control of xxx 2D detector
+* None so far
 
 
 PID Models
 ==========
-
+* None
 
 Extensions
 ==========
-
+* None
 
 Installation instructions
 =========================
 
-* PyMoDAQ’s version.
-* Operating system’s version.
-* What manufacturer’s drivers should be installed to make this plugin run?
+* PyMoDAQ’s version 4
+* Cross-platform, tried on Windows 11
+* Relies on a working tango installation with pytango and toml library
