@@ -1,0 +1,42 @@
+# Created 10/01/2025 by Aline Vernier LOA
+
+title = "Tango Devices"
+
+[owner]
+name = "Aline Vernier"
+
+[cameras]
+[cameras.oscillator]
+name = 'Osc cam'
+address = 'FE_CAMERA_1/ImgBeamAnalyzer/1'
+
+
+[cameras.amplifier]
+name = 'Amp cam'
+address = ''
+
+
+
+[spectrometers]
+[spectrometers.oscillator]
+name = 'Osc spectrum'
+address = 'SY-SPECTRO_1/Spectrometer/FE1'
+
+[spectrometers.amplifier]
+name = 'Amp spectrum'
+address = ''
+
+[spectrometers.compressor]
+name = 'comp spectrum'
+address = ''
+
+
+[energymeters]
+[energymeters.oscillator]
+name = 'Oscillator energy'
+address = ''
+
+[energymeters.amplifier]
+name = 'Amplifier spectrometer'
+address = ''
+
