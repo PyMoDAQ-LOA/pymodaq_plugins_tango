@@ -25,16 +25,14 @@ Use this template to create a repository on your account and start the developme
 Authors
 =======
 
-* First Author  (myemail@xxx.org)
-* Other author (myotheremail@xxx.org)
+* Aline Vernier  (aline.vernier@polytechnique.edu)
 
 .. if needed use this field
 
     Contributors
     ============
 
-    * First Contributor
-    * Other Contributors
+    * None
 
 .. if needed use this field
 
