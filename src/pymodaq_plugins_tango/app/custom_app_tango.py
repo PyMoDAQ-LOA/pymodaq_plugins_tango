@@ -15,7 +15,7 @@ plugin_config = PluginConfig()
 
 # todo: modify the name of this class to reflect its application and change the name in the main
 # method at the end of the script
-class CustomAppTemplate(gutils.CustomApp):
+class CustomAppTango(gutils.CustomApp):
 
     # todo: if you wish to create custom Parameter and corresponding widgets. These will be
     # automatically added as children of self.settings. Morevover, the self.settings_tree will

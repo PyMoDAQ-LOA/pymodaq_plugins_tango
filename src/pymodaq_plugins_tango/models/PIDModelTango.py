@@ -15,7 +15,7 @@ def some_function_to_convert_the_data(measurements: DataToExport):
     return [a, b]
 
 
-class PIDModelTemplate(PIDModelGeneric):
+class PIDModelTango(PIDModelGeneric):
     limits = dict(max=dict(state=False, value=100),
                   min=dict(state=False, value=-100),)
     konstants = dict(kp=0.1, ki=0.000, kd=0.0000)
