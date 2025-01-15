@@ -15,7 +15,7 @@ plugin_config = PluginConfig()
 # todo: modify this as you wish
 EXTENSION_NAME = 'MY_EXTENSION_NAME'  # the name that will be displayed in the extension list in the
 # dashboard
-CLASS_NAME = 'CustomExtensionTemplate'  # this should be the name of your class defined below
+CLASS_NAME = 'CustomExtensiontango'  # this should be the name of your class defined below
 
 
 # todo: modify the name of this class to reflect its application and change the name in the main
