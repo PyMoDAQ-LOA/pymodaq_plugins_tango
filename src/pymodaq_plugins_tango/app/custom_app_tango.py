@@ -5,7 +5,7 @@ from pymodaq.utils.config import Config
 from pymodaq.utils.logger import set_logger, get_module_name
 
 # todo: replace here *pymodaq_plugins_template* by your plugin package name
-from pymodaq_plugins_template.utils import Config as PluginConfig
+from pymodaq_plugins_tango.utils import Config as PluginConfig
 
 logger = set_logger(get_module_name(__file__))
 
@@ -114,7 +114,7 @@ def main():
     mainwindow.setCentralWidget(dockarea)
 
     # todo: change the name here to be the same as your app class
-    prog = CustomAppTemplate(dockarea)
+    prog = CustomAppTango(dockarea)
 
     mainwindow.show()
 
