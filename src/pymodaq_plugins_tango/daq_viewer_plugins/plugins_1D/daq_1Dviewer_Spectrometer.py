@@ -7,8 +7,8 @@ from pymodaq.utils.parameter import Parameter
 
 import pymodaq.utils.math_utils as mutils
 
-from pymodaq_plugins_template.hardware.TANGO.tango_device import TangoDevice
-from pymodaq_plugins_template.hardware.TANGO.tango_utils import TangoTomlConfig
+from pymodaq_plugins_tango.hardware.TANGO.tango_device import TangoDevice
+from pymodaq_plugins_tango.hardware.TANGO.tango_utils import TangoTomlConfig
 
 
 
@@ -42,8 +42,8 @@ class DAQ_1DViewer_Spectrometer(DAQ_Viewer_base):
 
     """Find right place for toml file"""
     print(os.getcwd())
-    config = TangoTomlConfig('spectrometers', "hardware/TANGO/tango_devices.toml")
-    print(config.addresses)
+    #config = TangoTomlConfig('spectrometers', "../../hardware/TANGO/tango_devices.toml")
+    #print(config.addresses)
     params = comon_parameters + [{'title': 'Device address:', 'name': 'dev_address',
                                   'type': 'list','value':'SY-SPECTRO_1/Spectrometer/FE1',
                                   'limits': ['SY-SPECTRO_1/Spectrometer/FE1', 'SY-SPECTRO_1/Spectrometer/FE2', 'SY-SPECTRO_1/Spectrometer/FE3'],
