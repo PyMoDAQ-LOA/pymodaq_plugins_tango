@@ -11,4 +11,3 @@ for path in Path(__file__).parent.iterdir():
         logger.warning("{:} plugin couldn't be loaded due to some missing packages or errors: {:}".format(path.stem, str(e)))
         pass
 
-

@@ -11,16 +11,16 @@ from pymodaq_plugins_tango.hardware.TANGO.tango_device import TangoDevice
 from pymodaq_plugins_tango.hardware.TANGO.tango_utils import TangoTomlConfig
 
 
-
 # TODO:
 # (1) change the name of the following class to DAQ_1DViewer_TheNameOfYourChoice
 # (2) change the name of this file to daq_1Dviewer_TheNameOfYourChoice ("TheNameOfYourChoice" should be the SAME
 #     for the class name and the file name.)
 # (3) this file should then be put into the right folder, namely IN THE FOLDER OF THE PLUGIN YOU ARE DEVELOPING:
 #     pymodaq_plugins_my_plugin/daq_viewer_plugins/plugins_1D
-class DAQ_1DViewer_Spectrometer(DAQ_Viewer_base):
+
+class DAQ_1DViewer_TangoSpectrometer(DAQ_Viewer_base):
     """ Instrument plugin class for a 1D viewer.
-    
+
     This object inherits all functionalities to communicate with PyMoDAQ’s DAQ_Viewer module through inheritance via
     DAQ_Viewer_base. It makes a bridge between the DAQ_Viewer module and the Python wrapper of a particular instrument.
 
@@ -36,20 +36,19 @@ class DAQ_1DViewer_Spectrometer(DAQ_Viewer_base):
     controller: object
         The particular object that allow the communication with the hardware, in general a python wrapper around the
          hardware library.
-         
+
     # TODO add your particular attributes here if any
     """
 
     """Find right place for toml file"""
     print(os.getcwd())
-    #config = TangoTomlConfig('spectrometers', "../../hardware/TANGO/tango_devices.toml")
-    #print(config.addresses)
+    # config = TangoTomlConfig('spectrometers', "../../hardware/TANGO/tango_devices.toml")
+    # print(config.addresses)
     params = comon_parameters + [{'title': 'Device address:', 'name': 'dev_address',
-                                  'type': 'list','value':'SY-SPECTRO_1/Spectrometer/FE1',
-                                  'limits': ['SY-SPECTRO_1/Spectrometer/FE1', 'SY-SPECTRO_1/Spectrometer/FE2', 'SY-SPECTRO_1/Spectrometer/FE3'],
-                                  'readonly': False},]
-
-
+                                  'type': 'list', 'value': 'SY-SPECTRO_1/Spectrometer/FE1',
+                                  'limits': ['SY-SPECTRO_1/Spectrometer/FE1', 'SY-SPECTRO_1/Spectrometer/FE2',
+                                             'SY-SPECTRO_1/Spectrometer/FE3'],
+                                  'readonly': False}, ]
 
     def ini_attributes(self):
         self.controller: TangoDevice = None
@@ -57,15 +56,14 @@ class DAQ_1DViewer_Spectrometer(DAQ_Viewer_base):
         self._address = None
 
     def commit_settings(self, param: Parameter):
-            pass
+        pass
 
     def ini_detector(self, controller=None):
-
         self._address = self.settings.child('dev_address').value()
         print(self._address)
         self.ini_detector_init(controller, TangoDevice(address=self._address,
-                           dimension= '1D',
-                           attributes=["lambda", "intensity"]))
+                                                       dimension='1D',
+                                                       attributes=["lambda", "intensity"]))
 
         initialized = self.controller.connected
         info = 'Controller ok'
@@ -92,7 +90,6 @@ class DAQ_1DViewer_Spectrometer(DAQ_Viewer_base):
                                axes=[Axis('Wavelength', data=xaxis)])
 
         self.dte_signal.emit(DataToExport('Spectrum', data=[data]))
-
 
     def stop(self):
         return ""
