@@ -9,14 +9,14 @@ import pymodaq.utils.math_utils as mutils
 
 from pymodaq_plugins_tango.hardware.TANGO.tango_device import TangoDevice
 from pymodaq_plugins_tango.hardware.TANGO.tango_utils import TangoTomlConfig
+from pathlib import Path
 
 
 # TODO:
 # (1) change the name of the following class to DAQ_1DViewer_TheNameOfYourChoice
 # (2) change the name of this file to daq_1Dviewer_TheNameOfYourChoice ("TheNameOfYourChoice" should be the SAME
 #     for the class name and the file name.)
-# (3) this file should then be put into the right folder, namely IN THE FOLDER OF THE PLUGIN YOU ARE DEVELOPING:
-#     pymodaq_plugins_my_plugin/daq_viewer_plugins/plugins_1D
+
 
 class DAQ_1DViewer_TangoSpectrometer(DAQ_Viewer_base):
     """ Instrument plugin class for a 1D viewer.
@@ -40,14 +40,10 @@ class DAQ_1DViewer_TangoSpectrometer(DAQ_Viewer_base):
     # TODO add your particular attributes here if any
     """
 
-    """Find right place for toml file"""
-    print(os.getcwd())
-    # config = TangoTomlConfig('spectrometers', "../../hardware/TANGO/tango_devices.toml")
-    # print(config.addresses)
+    config = TangoTomlConfig('spectrometers', Path(__file__).parents[2]/'resources/config_tango.toml')
     params = comon_parameters + [{'title': 'Device address:', 'name': 'dev_address',
-                                  'type': 'list', 'value': 'SY-SPECTRO_1/Spectrometer/FE1',
-                                  'limits': ['SY-SPECTRO_1/Spectrometer/FE1', 'SY-SPECTRO_1/Spectrometer/FE2',
-                                             'SY-SPECTRO_1/Spectrometer/FE3'],
+                                  'type': 'list', 'value': config.addresses[0],
+                                  'limits': config.addresses,
                                   'readonly': False}, ]
 
     def ini_attributes(self):
