@@ -1,8 +1,7 @@
-import numpy as np
-import tango
 from tango import DeviceProxy
 
-class TangoDevice():
+
+class TangoDevice:
     """
      Generic TANGO device class that reads a list of attributes as a value
         Needs : device address, dimension to plot, list of attributes to get
@@ -33,6 +32,7 @@ class TangoDevice():
 
     def getAttribute(self, attribute: str):
         return self.__deviceProxy.read_attribute(attribute).value
+
     def getAttributes(self):
         return [self.getAttribute(attribute) for attribute in self._attributes]
 
@@ -40,9 +40,10 @@ class TangoDevice():
     def value(self):
         return self.getAttributes()
 
+
 def user_story():
     myDevice = TangoDevice(address='SY-SPECTRO_1/Spectrometer/FE1',
-                           dimension= '1D',
+                           dimension='1D',
                            attributes=["lambda", "intensity", "boxcar", "Status"])
     print(myDevice.connected)
     print(myDevice.value)
@@ -50,5 +51,3 @@ def user_story():
 
 if __name__ == "__main__":
     user_story()
-
-
