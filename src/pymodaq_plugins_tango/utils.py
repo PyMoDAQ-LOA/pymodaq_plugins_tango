@@ -5,7 +5,7 @@ Created 17/01/2025
 """
 from pathlib import Path
 from pymodaq.utils.config import BaseConfig, USER
-import tango
+#import tango
 import tomllib
 
 
@@ -37,6 +37,7 @@ class TangoTomlConfig:
             print(e)
 
 
+'''
 class TangoCom:
 
     def __init__(self):
@@ -58,6 +59,8 @@ class TangoCom:
             return None
         else:
             return self._devices
+
+'''
 
 
 class Config(BaseConfig):
