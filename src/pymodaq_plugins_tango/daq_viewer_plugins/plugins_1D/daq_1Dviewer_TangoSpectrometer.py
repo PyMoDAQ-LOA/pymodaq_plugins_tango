@@ -8,7 +8,7 @@ from pymodaq.utils.parameter import Parameter
 import pymodaq.utils.math_utils as mutils
 
 from pymodaq_plugins_tango.hardware.TANGO.tango_device import TangoDevice
-from pymodaq_plugins_tango.utils import TangoTomlConfig
+from pymodaq_plugins_tango.hardware.TANGO.tango_config import TangoTomlConfig
 from pathlib import Path
 
 
