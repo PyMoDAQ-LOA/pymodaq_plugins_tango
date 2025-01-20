@@ -36,7 +36,6 @@ Authors
 
 .. if needed use this field
 
-  Depending on the plugin type, delete/complete the fields below
 
 
 Instruments
@@ -66,17 +65,9 @@ Viewer2D
 * None so far
 
 
-PID Models
-==========
-
-
-Extensions
-==========
-
-
 Installation instructions
 =========================
 
-* PyMoDAQ’s version :
+* PyMoDAQ’s version : 4.4.7
 * Operating system : Windows 11
-* Functional tango/pytango config required
+* Functional tango/pytango config required, version 10.0.0

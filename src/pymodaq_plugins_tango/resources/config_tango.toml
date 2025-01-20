@@ -8,7 +8,7 @@ name = "Aline Vernier"
 [cameras]
 [cameras.oscillator]
 name = 'Osc cam'
-address = 'FE_CAMERA_1/ImgBeamAnalyzer/1'
+address = 'FE_CAMERA_1/LimaDetector/1'
 
 
 [cameras.amplifier]
