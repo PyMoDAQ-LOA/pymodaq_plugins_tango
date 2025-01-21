@@ -33,13 +33,18 @@ class DAQ_2DViewer_TangoCamera(DAQ_Viewer_base):
         {'title': 'amp_noise', 'name': 'amp_noise', 'type': 'float', 'value': 4, 'default': 0.1, 'min': 0},
 
         {'title': 'Cam. Prop.:', 'name': 'cam_settings', 'type': 'group', 'children': []},
+        {'title': 'Device address:', 'name': 'dev_address',
+         'type': 'list', 'value': config.addresses[0],
+         'limits': config.addresses,
+         'readonly': False},
     ]
 
     def ini_attributes(self):
 
         self.tangoCam = None
         self._address = "FE_CAMERA_1/LimaDetector/1"
-        self.controller: str = None
+        self.controller: TangoDevice = None
+        self.image = None
 
         self.x_axis = None
         self.y_axis = None
@@ -91,12 +96,6 @@ class DAQ_2DViewer_TangoCamera(DAQ_Viewer_base):
                              endpoint=False)
         y_axis = np.linspace(0, self.settings.child('Ny').value(), self.settings.child('Ny').value(),
                              endpoint=False)
-        data_mock = self.settings.child('Amp').value() * (
-            mutils.gauss2D(x_axis, self.settings.child('x0').value(), self.settings.child('dx').value(),
-                          y_axis, self.settings.child('y0').value(), self.settings.child('dy').value(),
-                          self.settings.child('n').value())) + self.settings.child('amp_noise').value() * \
-                    np.random.rand(len(y_axis), len(x_axis))
-
 
         self.image = np.array(self.tangoCam.value[0])
 
@@ -107,21 +106,21 @@ class DAQ_2DViewer_TangoCamera(DAQ_Viewer_base):
         return self.image
 
     def ini_detector(self, controller=None):
-        self.ini_detector_init(controller, "Mock controller")
+        self._address = self.settings.child('dev_address').value()
+        print(self._address)
+        self.ini_detector_init(controller, TangoDevice(address=self._address,
+                                                       dimension='2D',
+                                                       attributes=["image"]))
         print("Starting tango Camera")
-        self.tangoCam = TangoDevice(address=self._address,
-                    dimension='2D',
-                    attributes=["image"])
         print("Finished Config")
-        print(self.tangoCam.connected)
-        print(self.tangoCam.value)
+        print(self.controller.connected)
+        print(self.controller.value)
 
-
-        self.x_axis = self.get_xaxis()
-        self.y_axis = self.get_yaxis()
+        #self.x_axis = self.get_xaxis()
+        #self.y_axis = self.get_yaxis()
 
         # initialize viewers with the future type of data but with 0value data
-        self.dte_signal_temp.emit(self.average_data(1, True))
+        #self.dte_signal_temp.emit(self.average_data(1, True))
 
         initialized = True
         info = 'Init'
@@ -143,51 +142,14 @@ class DAQ_2DViewer_TangoCamera(DAQ_Viewer_base):
 
     def grab_data(self, Naverage=1, **kwargs):
         """
-            | For each integer step of naverage range set mock data.
-            | Construct the data matrix and send the data_grabed_signal once done.
-
-            =============== ======== ===============================================
-            **Parameters**  **Type**  **Description**
-            *Naverage*      int       The number of images to average.
-                                      specify the threshold of the mean calculation
-            =============== ======== ===============================================
-
-            See Also
-            --------
-            set_Mock_data
+            Getting image as array
         """
+        data = self.controller.value[0]
+        print(type(data))
+        data = DataFromPlugins(name='Spectrum', data=[data])
 
-        "live is an attempt to export data as fast as possible"
-        if 'live' in kwargs:
-            if kwargs['live']:
-                self.live = True
-                self.live = False  # don't want to use that for the moment
+        self.dte_signal.emit(DataToExport('Spectrum', data=[data]))
 
-        if self.live:
-            while self.live:
-                data = self.average_data(Naverage)
-                QThread.msleep(100)
-                self.dte_signal.emit(data)
-                QtWidgets.QApplication.processEvents()
-        else:
-            data = self.average_data(Naverage)
-            self.dte_signal.emit(data)
-
-    def average_data(self, Naverage, init=False):
-        data = []  # list of image (at most 3 for red, green and blue channels)
-        data_tmp = np.zeros_like(self.image)
-        for ind in range(Naverage):
-            data_tmp += self.get_cam_data()
-        data_tmp = data_tmp / Naverage
-
-        data_tmp = data_tmp * (data_tmp >= self.settings['threshold']) * (init is False)
-        for ind in range(self.settings['Nimagespannel']):
-            datatmptmp = []
-            for indbis in range(self.settings['Nimagescolor']):
-                datatmptmp.append(data_tmp)
-            data.append(DataFromPlugins(name='Mock2D_{:d}'.format(ind), data=datatmptmp, dim='Data2D',
-                                        axes=[self.y_axis, self.x_axis]))
-        return DataToExport('Mock2D', data=data)
 
     def stop(self):
         """

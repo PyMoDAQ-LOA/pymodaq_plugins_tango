@@ -18,20 +18,27 @@ class TangoDevice:
         self.createProxy(self._address)
 
     def createProxy(self, address: str):
+        print("Creating device proxy")
         try:
             self.__deviceProxy = DeviceProxy(address)
+            print(self.__deviceProxy)
             self._connected = True
-        except:
+        except Exception as e:
             self.__deviceProxy = None
             self._connected = False
-            print('device proxy error')
+            print(f'Create proxy error : {e}')
 
     @property
     def connected(self):
         return self._connected
 
     def getAttribute(self, attribute: str):
-        return self.__deviceProxy.read_attribute(attribute).value
+        try:
+            self._value = self.__deviceProxy.read_attribute(attribute).value
+        except Exception as e:
+            self._value = None
+            print(f"Error in getAttribute function: {e}")
+        return self._value
 
     def getAttributes(self):
         return [self.getAttribute(attribute) for attribute in self._attributes]
