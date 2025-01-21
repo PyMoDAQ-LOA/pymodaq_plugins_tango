@@ -20,21 +20,8 @@ class DAQ_2DViewer_TangoCamera(DAQ_Viewer_base):
          'max': 3},
         {'title': 'Nimages pannels:', 'name': 'Nimagespannel', 'type': 'int', 'value': 1, 'default': 0, 'min': 0},
         {'title': 'Use ROISelect', 'name': 'use_roi_select', 'type': 'bool', 'value': False},
-        {'title': 'Threshold', 'name': 'threshold', 'type': 'int', 'value': 1, 'min': 0},
-        {'title': 'rolling', 'name': 'rolling', 'type': 'int', 'value': 1, 'min': 0},
-        {'title': 'Nx', 'name': 'Nx', 'type': 'int', 'value': 100, 'default': 100, 'min': 1},
-        {'title': 'Ny', 'name': 'Ny', 'type': 'int', 'value': 200, 'default': 200, 'min': 1},
-        {'title': 'Amp', 'name': 'Amp', 'type': 'int', 'value': 20, 'default': 20, 'min': 1},
-        {'title': 'x0', 'name': 'x0', 'type': 'slide', 'value': 50, 'default': 50, 'min': 0},
-        {'title': 'y0', 'name': 'y0', 'type': 'float', 'value': 100, 'default': 100, 'min': 0},
-        {'title': 'dx', 'name': 'dx', 'type': 'float', 'value': 20, 'default': 20, 'min': 1},
-        {'title': 'dy', 'name': 'dy', 'type': 'float', 'value': 40, 'default': 40, 'min': 1},
-        {'title': 'n', 'name': 'n', 'type': 'int', 'value': 1, 'default': 1, 'min': 1},
-        {'title': 'amp_noise', 'name': 'amp_noise', 'type': 'float', 'value': 4, 'default': 0.1, 'min': 0},
-
         {'title': 'Cam. Prop.:', 'name': 'cam_settings', 'type': 'group', 'children': []},
-        {'title': 'Device address:', 'name': 'dev_address',
-         'type': 'list', 'value': config.addresses[0],
+        {'title': 'Device address:', 'name': 'dev_address', 'type': 'list', 'value': config.addresses[0],
          'limits': config.addresses,
          'readonly': False},
     ]
@@ -42,7 +29,7 @@ class DAQ_2DViewer_TangoCamera(DAQ_Viewer_base):
     def ini_attributes(self):
 
         self.tangoCam = None
-        self._address = "FE_CAMERA_1/LimaDetector/1"
+        self._address = self.config.addresses[0]
         self.controller: TangoDevice = None
         self.image = None
 
@@ -72,36 +59,23 @@ class DAQ_2DViewer_TangoCamera(DAQ_Viewer_base):
             --------
             set_Mock_data
         """
-        self.get_cam_data()
+        #self.get_cam_data()
+        pass
 
     def get_cam_data(self):
         """
-            | Set the x_axis and y_axis with a linspace distribution from settings parameters.
-            |
-
-            Once done, set the data mock with parameters :
-                * **Amp** : The amplitude
-                * **x0** : the origin of x
-                * **dx** : the derivative x pos
-                * **y0** : the origin of y
-                * **dy** : the derivative y pos
-                * **n** : ???
-                * **amp_noise** : the noise amplitude
-
-            Returns
-            -------
-                The computed data mock.
         """
         x_axis = np.linspace(0, self.settings.child('Nx').value(), self.settings.child('Nx').value(),
                              endpoint=False)
+        print(f"settings : {self.settings.child('Nx').value()}")
         y_axis = np.linspace(0, self.settings.child('Ny').value(), self.settings.child('Ny').value(),
                              endpoint=False)
 
         self.image = np.array(self.tangoCam.value[0])
 
         QThread.msleep(100)
-        self.x_axis = Axis(label='the x axis', data=x_axis, index=1)
-        self.y_axis = Axis(label='the y axis', data=y_axis, index=0)
+        self.x_axis = Axis(label='Horizontal', data=x_axis, index=1)
+        self.y_axis = Axis(label='Vertical', data=y_axis, index=0)
 
         return self.image
 
@@ -142,13 +116,11 @@ class DAQ_2DViewer_TangoCamera(DAQ_Viewer_base):
 
     def grab_data(self, Naverage=1, **kwargs):
         """
-            Getting image as array
+            Getting image as numpy array
         """
         data = self.controller.value[0]
-        print(type(data))
-        data = DataFromPlugins(name='Spectrum', data=[data])
-
-        self.dte_signal.emit(DataToExport('Spectrum', data=[data]))
+        data = DataFromPlugins(name='Front-end far-field', data=[data])
+        self.dte_signal.emit(DataToExport('Front-end far-field', data=[data]))
 
 
     def stop(self):
