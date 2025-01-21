@@ -19,7 +19,7 @@ pymodaq_plugins_template
     :target: https://github.com/PyMoDAQ/pymodaq_plugins_template/actions/workflows/Test.yml
 
 
-Use this template to create a repository on your account and start the development of your own PyMoDAQ plugin!
+Basic PyMoDAQ plugin for TANGO controls instruments : uses pyTango to get data from TANGO bus
 
 
 Authors
@@ -41,7 +41,7 @@ Authors
 Instruments
 ===========
 
-Below is the list of instruments included in this plugin
+Below is the list of "instruments" included in this plugin
 
 Actuators
 +++++++++
@@ -62,7 +62,7 @@ Viewer1D
 Viewer2D
 ++++++++
 
-* None so far
+* Basic camera view, generic - enter parameters in config file
 
 
 Installation instructions
