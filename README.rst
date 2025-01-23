@@ -51,18 +51,18 @@ Actuators
 Viewer0D
 ++++++++
 
-* None so far
+* Energymeter, generic
 
 Viewer1D
 ++++++++
 
-* Spectrometer, generic - enter parameters in config file
+* Spectrometer, generic
 
 
 Viewer2D
 ++++++++
 
-* Basic camera view, generic - enter parameters in config file
+* Basic camera view, generic
 
 
 Installation instructions
@@ -71,3 +71,4 @@ Installation instructions
 * PyMoDAQ’s version : 4.4.7
 * Operating system : Windows 11
 * Functional tango/pytango config required, version 10.0.0
+* Parameters should be entered in config file: src/resources/config_tango.toml

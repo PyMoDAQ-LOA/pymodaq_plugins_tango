@@ -12,13 +12,7 @@ from pymodaq_plugins_tango.hardware.TANGO.tango_config import TangoTomlConfig
 from pathlib import Path
 
 
-# TODO:
-# (1) change the name of the following class to DAQ_1DViewer_TheNameOfYourChoice
-# (2) change the name of this file to daq_1Dviewer_TheNameOfYourChoice ("TheNameOfYourChoice" should be the SAME
-#     for the class name and the file name.)
-
-
-class DAQ_0DViewer_Energy(DAQ_Viewer_base):
+class DAQ_0DViewer_TangoEnergy(DAQ_Viewer_base):
 
     config = TangoTomlConfig('energymeters', Path(__file__).parents[2]/'resources/config_tango.toml')
     params = comon_parameters + [{'title': 'Device address:', 'name': 'dev_address',
