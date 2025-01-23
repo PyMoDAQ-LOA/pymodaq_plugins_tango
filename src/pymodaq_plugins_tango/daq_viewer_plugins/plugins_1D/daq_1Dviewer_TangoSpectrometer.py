@@ -44,7 +44,7 @@ class DAQ_1DViewer_TangoSpectrometer(DAQ_Viewer_base):
     params = comon_parameters + [{'title': 'Device address:', 'name': 'dev_address',
                                   'type': 'list', 'value': config.addresses[0],
                                   'limits': config.addresses,
-                                  'readonly': False}, ]
+                                  'readonly': False},]
 
     def ini_attributes(self):
         self.controller: TangoDevice = None
@@ -52,7 +52,7 @@ class DAQ_1DViewer_TangoSpectrometer(DAQ_Viewer_base):
         self._address = None
 
     def commit_settings(self, param: Parameter):
-        pass
+        print("called commit settings")
 
     def ini_detector(self, controller=None):
         self._address = self.settings.child('dev_address').value()

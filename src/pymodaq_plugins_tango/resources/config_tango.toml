@@ -1,4 +1,15 @@
-# Created 10/01/2025 by Aline Vernier LOA
+# Created 10/01/2025 by Aline Vernier, LOA
+
+################################################################################
+# HOW TO FILL THIS TOML FILE :
+
+# General for all devices :
+#   Name : name of device to display in parameter set - General for all devices
+#   Address : Address of device driver in TANGO
+# Device-specific :
+#   Attributes : List of attributes
+
+################################################################################
 
 title = "Tango Devices"
 
@@ -6,37 +17,45 @@ title = "Tango Devices"
 name = "Aline Vernier"
 
 [cameras]
-[cameras.oscillator]
-name = 'Osc cam'
-address = 'FE_CAMERA_1/LimaDetector/1'
+    [cameras.oscillator]
+    name = 'Osc cam'
+    address = 'FE_CAMERA_1/LimaDetector/1'
+    # attributes : Image attribute name in TANGO
+    attributes = ['image']
 
-
-[cameras.amplifier]
-name = 'Amp cam'
-address = ''
-
-
+    [cameras.amplifier]
+    name = 'Amp cam'
+    address = ''
+    attributes = ['image']
 
 [spectrometers]
-[spectrometers.oscillator]
-name = 'Osc spectrum'
-address = 'SY-SPECTRO_1/Spectrometer/FE1'
+    [spectrometers.oscillator]
+    name = 'Osc spectrum'
+    address = 'SY-SPECTRO_1/Spectrometer/FE1'
+    # attributes : Attributes of wavelength and intensity axes in TANGO
+    attributes = ['lambda', 'intensity']
 
-[spectrometers.amplifier]
-name = 'Amp spectrum'
-address = ''
+    [spectrometers.amplifier]
+    name = 'Amp spectrum'
+    address = ''
+    # attributes : Attributes of wavelength and intensity axes in TANGO
+    attributes = ['lambda', 'intensity']
 
-[spectrometers.compressor]
-name = 'comp spectrum'
-address = ''
 
+    [spectrometers.compressor]
+    name = 'comp spectrum'
+    address = ''
+    # attributes : Attributes of wavelength and intensity axes in TANGO
+    attributes = ['lambda', 'intensity']
 
 [energymeters]
-[energymeters.oscillator]
-name = 'Oscillator energy'
-address = ''
+    [energymeters.oscillator]
+    name = 'Oscillator energy'
+    address = ''
+    # attributes : Energy attribute name in TANGO
+    attributes = ['energy']
 
-[energymeters.amplifier]
-name = 'Amplifier spectrometer'
-address = ''
-
+    [energymeters.amplifier]
+    name = 'Amplifier spectrometer'
+    address = 'AMP_EM_1/Energymeter/1'
+    attributes = ['energy_1']

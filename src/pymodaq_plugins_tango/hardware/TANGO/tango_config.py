@@ -15,6 +15,7 @@ class TangoTomlConfig:
     def __init__(self, dev_type, toml_file):
         assert dev_type in self.DEVICES
         self._addresses = []
+        self._attributes = {}
         self._config = {}
 
         self.parse_config(dev_type, toml_file)
@@ -22,6 +23,10 @@ class TangoTomlConfig:
     @property
     def addresses(self):
         return self._addresses
+
+    @property
+    def tango_attributes(self):
+        return self._attributes
 
     @property
     def config(self):
@@ -33,8 +38,10 @@ class TangoTomlConfig:
                 self._config = tomllib.load(f)
 
             self._addresses = [self._config[dev_type][key]['address'] for key in self._config[dev_type].keys()]
+            self._attributes = [self._config[dev_type][key]['attributes'] for key in self._config[dev_type].keys()]
+
         except Exception as e:
-            print(e)
+            print(f"Exception reading {e}")
 
 
 class TangoCom:
@@ -59,10 +66,20 @@ class TangoCom:
         else:
             return self._devices
 
+try :
+    class Config(BaseConfig):
+        """Main class to deal with configuration values for this plugin"""
+        config_template_path = Path(__file__).parent.joinpath('resources/config_tango.toml')
+        config_name = f"config_{__package__.split('pymodaq_plugins_')[1]}"
+        print ("Created config instance.")
+except Exception as e:
+    print(f"Error : {e}")
 
 
+def user_story():
+    myConfig = TangoTomlConfig('spectrometers', Path(__file__).parents[2]/'resources/config_tango.toml')
+    print(f"Tango attributes: {myConfig.tango_attributes}")
 
-class Config(BaseConfig):
-    """Main class to deal with configuration values for this plugin"""
-    config_template_path = Path(__file__).parent.joinpath('resources/config_tango.toml')
-    config_name = f"config_{__package__.split('pymodaq_plugins_')[1]}"
+
+if __name__ == "__main__":
+    user_story()
