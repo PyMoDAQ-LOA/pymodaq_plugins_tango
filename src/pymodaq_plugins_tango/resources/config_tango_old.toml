@@ -37,6 +37,7 @@ name = "Aline Vernier"
     [analysis.oscillator]
     name = 'Oscillator beam analysis'
     address = 'FE_CAMERA_1/ImgBeamAnalyzer/1'
+    # attributes : Image attribute name in TANGO
     attributes = ['CentroidX', 'CentroidY', 'MaxIntensity',
         'PeakX', 'PeakY', 'VarianceX', 'VarianceY']
 
@@ -45,20 +46,21 @@ name = "Aline Vernier"
     [spectrometers.oscillator]
     name = 'Osc spectrum'
     address = 'SY-SPECTRO_1/Spectrometer/FE1'
+    # attributes : Attributes of wavelength and intensity axes in TANGO
     attributes = ['lambda', 'intensity']
-    attributes_dict = {lambda = 'lambda', intensity = 'intensity'}
 
     [spectrometers.amplifier]
     name = 'Amp spectrum'
-    address = 'SY-SPECTRO_1/Spectrometer/FE2'
+    address = ''
+    # attributes : Attributes of wavelength and intensity axes in TANGO
     attributes = ['lambda', 'intensity']
-    attributes_dict = {lambda = 'longueurOnde', intensity = 'intensite'}
+
 
     [spectrometers.compressor]
     name = 'comp spectrum'
-    address = 'SY-SPECTRO_1/Spectrometer/FE3'
+    address = ''
+    # attributes : Attributes of wavelength and intensity axes in TANGO
     attributes = ['lambda', 'intensity']
-    attributes_dict = {lambda = 'lambda', intensity = 'intensity'}
 
 [energymeters]
     [energymeters.oscillator]
@@ -72,5 +74,3 @@ name = "Aline Vernier"
     address = 'AMP_EM_1/Energymeter/1'
     # attributes : Energy attribute name in TANGO
     attributes = ['energy_1']
-
-

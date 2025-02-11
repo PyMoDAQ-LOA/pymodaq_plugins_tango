@@ -11,10 +11,21 @@ from pymodaq_plugins_tango.hardware.TANGO.tango_device import TangoDevice
 from pymodaq_plugins_tango.hardware.TANGO.tango_config import TangoTomlConfig
 from pathlib import Path
 
+'''
+Instrument plugin class for a 0D viewer.
 
-class DAQ_0DViewer_TangoEnergy(DAQ_Viewer_base):
+    0D viewer, modify instrument_name, x_axis_attribute, y_axis_attribute to match the TOML config file. 
 
-    config = TangoTomlConfig('energymeters', Path(__file__).parents[2]/'resources/config_tango.toml')
+'''
+
+
+
+class DAQ_0DViewer_Tango0DGeneric(DAQ_Viewer_base):
+
+    instrument_name = 'energymeters'
+    data_attribute = 'energy_1'
+
+    config = TangoTomlConfig(instrument_name, Path(__file__).parents[2]/'resources/config_tango.toml')
     params = comon_parameters + [{'title': 'Device address:', 'name': 'dev_address',
                                   'type': 'list', 'value': config.addresses[1],
                                   'limits': config.addresses,
@@ -33,7 +44,7 @@ class DAQ_0DViewer_TangoEnergy(DAQ_Viewer_base):
         print(self._address)
         self.ini_detector_init(controller, TangoDevice(address=self._address,
                                                        dimension='0D',
-                                                       attributes=["energy_1"]))
+                                                       attributes=[self.data_attribute]))
 
         initialized = self.controller.connected
         info = 'Controller ok'

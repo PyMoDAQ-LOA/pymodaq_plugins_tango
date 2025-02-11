@@ -18,18 +18,26 @@ from pathlib import Path
 #     for the class name and the file name.)
 
 
-class DAQ_1DViewer_TangoSpectrometer(DAQ_Viewer_base):
+class DAQ_1DViewer_Tango1DGeneric(DAQ_Viewer_base):
     """ Instrument plugin class for a 1D viewer.
 
-    1D viewer, specific to a spectrometer
+    1D viewer, modify instrument_name, x_axis_attribute, y_axis_attribute to match the TOML config file.
 
     """
+    instrument_name = 'spectrometers'
+    x_axis_attribute = 'lambda'
+    y_axis_attribute = 'intensity'
 
-    config = TangoTomlConfig('spectrometers', Path(__file__).parents[2]/'resources/config_tango.toml')
+    config = TangoTomlConfig(instrument_name, Path(__file__).parents[2]/'resources/config_tango.toml')
     params = comon_parameters + [{'title': 'Device address:', 'name': 'dev_address',
                                   'type': 'list', 'value': config.addresses[0],
                                   'limits': config.addresses,
-                                  'readonly': False},]
+                                  'readonly': False},
+                                 {'title': 'Device address:', 'name': 'dev_address',
+                                  'type': 'list', 'value': config.addresses[0],
+                                  'limits': config.addresses,
+                                  'readonly': False},
+                                 ]
 
     def ini_attributes(self):
         self.controller: TangoDevice = None
@@ -44,7 +52,7 @@ class DAQ_1DViewer_TangoSpectrometer(DAQ_Viewer_base):
         print(self._address)
         self.ini_detector_init(controller, TangoDevice(address=self._address,
                                                        dimension='1D',
-                                                       attributes=["lambda", "intensity"]))
+                                                       attributes=[self.x_axis_attribute, self.y_axis_attribute]))
 
         initialized = self.controller.connected
         info = 'Controller ok'

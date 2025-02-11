@@ -10,7 +10,7 @@ import tomllib
 
 
 class TangoTomlConfig:
-    DEVICES = ['spectrometers', 'cameras', 'energymeters']
+    DEVICES = ['spectrometers', 'cameras', 'energymeters', 'analysis']
 
     def __init__(self, dev_type, toml_file):
         assert dev_type in self.DEVICES
@@ -77,7 +77,7 @@ except Exception as e:
 
 
 def user_story():
-    myConfig = TangoTomlConfig('spectrometers', Path(__file__).parents[2]/'resources/config_tango.toml')
+    myConfig = TangoTomlConfig('analysis', Path(__file__).parents[2]/'resources/config_tango.toml')
     print(f"Tango attributes: {myConfig.tango_attributes}")
 
 
